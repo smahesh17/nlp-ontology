@@ -1,9 +1,118 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>ontology.nlp</groupId>
-  <artifactId>org.research.implicit.ontology.nlp</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>Archetype - org.research.implicit.ontology.nlp</name>
-  <url>http://maven.apache.org</url>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ontology.nlp</groupId>
+	<artifactId>org.research.implicit.ontology.nlp</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Archetype - org.research.implicit.ontology.nlp</name>
+	<url>http://maven.apache.org</url>
+
+	<repositories>
+		<repository>
+			<id>apache opennlp snapshot</id>
+			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.opennlp</groupId>
+			<artifactId>opennlp-tools</artifactId>
+			<version>1.6.0</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.opennlp</groupId>
+			<artifactId>opennlp-uima</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>edu.stanford.protege</groupId>
+			<artifactId>org.protege.editor.owl.codegeneration</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+
+		<!-- http://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+
+		<!-- http://mvnrepository.com/artifact/org.apache.poi/poi -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.14</version>
+		</dependency>
+
+
+	</dependencies>
+
+	<build>
+		<directory>target</directory>
+		<outputDirectory>target/classes</outputDirectory>
+		<finalName>${artifactId}-${version}</finalName>
+		<testOutputDirectory>target/test-classes</testOutputDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+		<plugins>
+			<plugin>
+				<groupId>org.research.nlp.ontology.maven.plugins</groupId>
+				<artifactId>maven-ontology-nlp-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>id.pre-clean</id>
+						<phase>pre-clean</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>pre-clean phase</echo>
+							</tasks>
+						</configuration>
+					</execution>
+					<execution>
+						<id>id.clean</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>clean phase</echo>
+							</tasks>
+						</configuration>
+					</execution>
+					<execution>
+						<id>id.post-clean</id>
+						<phase>post-clean</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>post-clean phase</echo>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+	</build>
+
 </project>
