@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.function.Consumer;
 
 import org.research.nlp.Result;
 
@@ -30,8 +31,10 @@ public class NLPPosParseStrategy implements INLPParseStrategy {
 	}
 	
 	
-	public void tokenize(String content) throws InvalidFormatException, IOException {
+	public void tokenize(String content,Consumer<String> consumer) throws InvalidFormatException, IOException {
+
 		String name = "en-token.bin";
+
 		InputStream is = getResourceStream(name);
 	 
 		TokenizerModel model = new TokenizerModel(is);
@@ -40,8 +43,10 @@ public class NLPPosParseStrategy implements INLPParseStrategy {
 	 
 		String tokens[] = tokenizer.tokenize(content);
 	 
-		for (String a : tokens)
+		for (String a : tokens){
 			System.out.println(a);
+			consumer.accept(a);
+		}
 	 
 		is.close();
 	}
@@ -59,9 +64,8 @@ public class NLPPosParseStrategy implements INLPParseStrategy {
 	}
 
 	
-	public void POSTag(String input) throws IOException {
-		
-		
+	public void POSTag(String input, Consumer<POSSample> consumer) throws IOException {
+
 //		portability is the problem here - FIX THIS
 		
 		String pathname = "en-pos-maxent.bin";
@@ -82,7 +86,8 @@ public class NLPPosParseStrategy implements INLPParseStrategy {
 			String[] tags = tagger.tag(whitespaceTokenizerLine);
 	 
 			POSSample sample = new POSSample(whitespaceTokenizerLine, tags);
-			System.out.println(sample.toString());
+//			System.out.println(sample.toString());
+			consumer.accept(sample);
 	 
 			perfMon.incrementCounter();
 		}
